@@ -1,38 +1,6 @@
 interface PaymentStrategy {
     boolean pay(double amount);
 }
-class CreditCardPayment implements PaymentStrategy {
-    @Override
-    public boolean pay(double amount) {
-        System.out.println("Making payment using credit card");
-        return true;
-    }
-}
-
-class PayPalPayment implements PaymentStrategy {
-    @Override
-    public boolean pay(double amount) {
-        System.out.println("Making payment using PayPal");
-        return true;
-    }
-}
-
-class BankPayment implements PaymentStrategy {
-    @Override
-    public boolean pay(double amount) {
-        System.out.println("Making payment using bank");
-        return true;
-    }
-}
-
-class BkashPayment implements PaymentStrategy {
-    @Override
-    public boolean pay(double amount) {
-        System.out.println("Making payment using Bkash");
-        return true;
-    }
-}
-
 public class PaymentSystem {
     private PaymentStrategy paymentStrategy;
 
@@ -53,6 +21,9 @@ public class PaymentSystem {
         paymentSystem.setPaymentStrategy(new BankPayment());
         paymentSystem.makePayment(200);
 
+        paymentSystem.setPaymentStrategy(new PayPalPayment());
+        paymentSystem.makePayment(1000);
+
         paymentSystem.setPaymentStrategy(new BkashPayment());
         paymentSystem.makePayment(500);
 
@@ -60,3 +31,4 @@ public class PaymentSystem {
         paymentSystem.makePayment(5500);
     }
 }
+
