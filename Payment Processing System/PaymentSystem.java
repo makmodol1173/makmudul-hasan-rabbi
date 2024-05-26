@@ -1,43 +1,62 @@
+interface PaymentStrategy {
+    boolean pay(double amount);
+}
+class CreditCardPayment implements PaymentStrategy {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("Making payment using credit card");
+        return true;
+    }
+}
+
+class PayPalPayment implements PaymentStrategy {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("Making payment using PayPal");
+        return true;
+    }
+}
+
+class BankPayment implements PaymentStrategy {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("Making payment using bank");
+        return true;
+    }
+}
+
+class BkashPayment implements PaymentStrategy {
+    @Override
+    public boolean pay(double amount) {
+        System.out.println("Making payment using Bkash");
+        return true;
+    }
+}
+
 public class PaymentSystem {
-    public boolean makePayment(String paymentType, double amount) {
-        boolean isPaid = false;
-        if (paymentType.equals("CreditCard")) {
-            System.out.println("making payment using credit ");
-            isPaid = paymentUsingCreditCard(amount);
-        } else if (paymentType.equals("PayPal")) {
-            System.out.println("making payment using PayPal ");
-            isPaid = paymentUsingPayPal(amount);
-        } else if (paymentType.equals("Bank")) {
-            System.out.println("making payment using Bank ");
-            isPaid = paymentUsingBank(amount);
+    private PaymentStrategy paymentStrategy;
+
+    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public boolean makePayment(double amount) {
+        if (paymentStrategy == null) {
+            throw new IllegalStateException("Payment strategy not set");
         }
-        return isPaid;
-    }
-
-    private boolean paymentUsingCreditCard(double amount) {
-        // do something
-        return true;
-    }
-
-    private boolean paymentUsingPayPal(double amount) {
-        // do something
-        return true;
-    }
-
-    private boolean paymentUsingBank(double amount) {
-        // do something
-        return true;
-    }
-
-    private boolean paymentUsingBkash(double amount) {
-        // do something
-        return true;
+        return paymentStrategy.pay(amount);
     }
 
     public static void main(String[] args) {
         PaymentSystem paymentSystem = new PaymentSystem();
-        paymentSystem.makePayment("Bank", 200);
-        paymentSystem.makePayment("Bkash", 500);
-        paymentSystem.makePayment("CreditCard", 5500);
+
+        paymentSystem.setPaymentStrategy(new BankPayment());
+        paymentSystem.makePayment(200);
+
+        paymentSystem.setPaymentStrategy(new BkashPayment());
+        paymentSystem.makePayment(500);
+
+        paymentSystem.setPaymentStrategy(new CreditCardPayment());
+        paymentSystem.makePayment(5500);
     }
 }
